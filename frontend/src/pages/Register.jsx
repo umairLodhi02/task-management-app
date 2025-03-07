@@ -7,7 +7,7 @@ import CenteredFormLayout from "../components/Layout/CenteredFormLayout";
 const Register = () => {
   const navigate = useNavigate();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: signup,
     onSuccess: () => {
       message.success("Registration successful!");
@@ -60,7 +60,7 @@ const Register = () => {
           <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={isLoading}>
+          <Button type="primary" htmlType="submit" loading={isPending}>
             Register
           </Button>
         </Form.Item>

@@ -10,22 +10,23 @@ const TaskList = ({ onEdit, filterStatus }) => {
 
   const isCompletedTask = (status) => status === "Completed";
 
-  const { data: tasks, isLoading } = useQuery({
+  const { data: tasks, isPending } = useQuery({
     queryKey: ["tasks", filterStatus],
     queryFn: () =>
       fetchTasks(filterStatus === "All" ? undefined : filterStatus),
   });
 
-  const { mutate: deleteTaskMutation } = useMutation({
-    mutationFn: deleteTask,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["tasks"]);
-      message.success("Task deleted successfully!");
-    },
-    onError: () => {
-      message.error("Error deleting task.");
-    },
-  });
+  const { mutate: deleteTaskMutation, isPending: isLoadingDelete } =
+    useMutation({
+      mutationFn: deleteTask,
+      onSuccess: () => {
+        queryClient.invalidateQueries(["tasks"]);
+        message.success("Task deleted successfully!");
+      },
+      onError: () => {
+        message.error("Error deleting task.");
+      },
+    });
 
   const { mutate: updateTaskStatus } = useMutation({
     mutationFn: updateTask,
@@ -98,7 +99,12 @@ const TaskList = ({ onEdit, filterStatus }) => {
           >
             Edit
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record._id)}>
+          <Button
+            type="link"
+            danger
+            onClick={() => handleDelete(record._id)}
+            loading={isLoadingDelete}
+          >
             Delete
           </Button>
         </Space>
@@ -110,7 +116,7 @@ const TaskList = ({ onEdit, filterStatus }) => {
     <Table
       dataSource={tasks?.data}
       columns={columns}
-      loading={isLoading}
+      loading={isPending}
       rowKey="_id"
     />
   );

@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 const TaskForm = ({ form, task, onCancel }) => {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: task ? updateTask : createTask,
     onSuccess: () => {
       queryClient.invalidateQueries(["tasks"]);
@@ -63,7 +63,7 @@ const TaskForm = ({ form, task, onCancel }) => {
         />
       </Form.Item>
       <Form.Item style={{ textAlign: "right" }}>
-        <Button type="primary" htmlType="submit" loading={isLoading}>
+        <Button type="primary" htmlType="submit" loading={isPending}>
           {task ? "Update" : "Create"}
         </Button>
       </Form.Item>

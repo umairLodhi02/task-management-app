@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
       const data = response.data;
@@ -51,7 +51,7 @@ const Login = () => {
           <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={isLoading}>
+          <Button type="primary" htmlType="submit" loading={isPending}>
             Login
           </Button>
         </Form.Item>

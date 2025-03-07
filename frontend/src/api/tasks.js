@@ -1,9 +1,8 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:5000/api/tasks";
+import { TASKS_URL } from "../constant/Constants";
 
 export const fetchTasks = async (status) => {
-  const response = await axios.get(API_URL, {
+  const response = await axios.get(TASKS_URL, {
     params: { status },
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   });
@@ -11,21 +10,21 @@ export const fetchTasks = async (status) => {
 };
 
 export const createTask = async (taskData) => {
-  const response = await axios.post(API_URL, taskData, {
+  const response = await axios.post(TASKS_URL, taskData, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   });
   return response.data;
 };
 
 export const updateTask = async ({ id, ...taskData }) => {
-  const response = await axios.patch(`${API_URL}/${id}`, taskData, {
+  const response = await axios.patch(`${TASKS_URL}/${id}`, taskData, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   });
   return response.data;
 };
 
 export const deleteTask = async (id) => {
-  const response = await axios.delete(`${API_URL}/${id}`, {
+  const response = await axios.delete(`${TASKS_URL}/${id}`, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   });
   return response.data;
