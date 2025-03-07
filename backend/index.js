@@ -25,6 +25,7 @@ app.use("/api/tasks", taskRoutes);
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
+    serverSelectionTimeoutMS: 30000,
     useUnifiedTopology: true,
   })
   .then(() => console.log("Connected to MongoDB"))
